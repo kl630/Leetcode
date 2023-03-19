@@ -13,11 +13,12 @@
  */
 
 function invertTree(root: TreeNode | null): TreeNode | null {
+    //base case
     if (root === null) return root;
+    invertTree(root.left);
+    invertTree(root.right);
     let tempNode: TreeNode | null = root.left;
     root.left = root.right;
     root.right = tempNode;
-    invertTree(root.left);
-    invertTree(root.right);
     return root;
 };
