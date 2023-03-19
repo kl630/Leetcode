@@ -37,7 +37,7 @@ function rightSideView(root: TreeNode | null): number[] {
             }
         }  
         res.push(tempArr[tempArr.length - 1]);
-        tempArr = [];
+        // tempArr = [];
     }
     return res;
 };
