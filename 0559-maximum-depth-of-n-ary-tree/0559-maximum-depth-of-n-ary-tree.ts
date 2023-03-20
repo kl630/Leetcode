@@ -20,6 +20,5 @@ function maxDepth(root: Node | null): number {
     for (let i = 0; i < root.children.length; i++) {
         max = Math.max(max, maxDepth(root.children[i]));
     }
-    max += 1;
-    return max;
+    return max + 1;
 };
