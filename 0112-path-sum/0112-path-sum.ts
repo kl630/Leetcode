@@ -16,7 +16,7 @@ function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
     // helper function
     function recur(node: TreeNode, sum: number) : boolean {
         if (!node.left && !node.right && sum === 0) return true;
-        if (!node.left && !node.right) return false;
+        if (!node.left && !node.right && sum !== 0) return false;
         if (node.left) {
             sum -= node.left.val;
             if (recur(node.left, sum)) return true;
@@ -27,7 +27,6 @@ function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
             if (recur(node.right, sum)) return true;
             sum += node.right.val;
         }
-        // can we delete this line? return false;
         return false;
     }
     if (root === null) return false;
