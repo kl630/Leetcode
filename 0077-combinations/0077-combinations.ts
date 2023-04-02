@@ -10,7 +10,7 @@ function combine(n: number, k: number): number[][] {
         }
         
         // 单层搜索 —— for循环横向遍历， 递归纵向遍历
-        for (let i: number = startIndex; i <= n; i++) {
+        for (let i: number = startIndex; i <= n - (k - path.length) + 1; i++) {
             path.push(i);
             backtracking(n, k, i + 1, path);
             path.pop();
