@@ -4,7 +4,6 @@
  * @return {number}
  */
 var longestCommonSubsequence = function(text1, text2) {
-    let result = 0;
     let arr1 = text1.split('');
     let arr2 = text2.split('');
     // arr1 = [ 'a', 'b', 'c', 'd', 'e' ]
@@ -22,13 +21,11 @@ var longestCommonSubsequence = function(text1, text2) {
             } else {
                 dp[i][j] = Math.max(dp[i][j-1], dp[i-1][j]);
             }
-            result = Math.max(result, dp[i][j]);
         } 
     }
     // 3. initialization
     // dp array initially is set to dp[i][j] = 0 
     // 4. traversal order; from front to back
     // 5. print dp array to test it out
-    console.log(dp);
-    return result;
+    return dp[arr1.length][arr2.length];
 };
