@@ -11,24 +11,29 @@
  * @return {number[]}
  */
 var postorderTraversal = function(root) {
-    // Recursion 3 Steps
-    // 1. recursion function params and return value
-    // (usually params are treenode and a result array to store the result. so return value is void)
-    
-    const traversal = (curNode, res) => {
-        // post-order
-        // left child -> right child -> curNode
-        if (!curNode) return;
-        traversal(curNode.left, res);
-        traversal(curNode.right, res);
-        res.push(curNode.val);
-    };
-    // 2. termination condition
-    // if the curNode is null, return
-    // 3. the logic on each traversal level
-    let res = [];
-    traversal(root, res);
-    return res;
-    
     // Recursive solution is trivial, could you do it iteratively?
+    
+    // pre-order is starting from root, then push in the right child, then left child
+    // post-order can be derived from pre-order and make some tweaks
+    // instead, we push in the left child first, then right child, so that we get
+    // mid-> right child -> left child
+    // then reverse the entire result so we get : left child -> right child -> mid,
+    // which is exactly post-order traversal
+    let stack = [];
+    let res = [];
+    if (!root) return res;
+    stack.push(root);
+    while (stack.length > 0) {
+        // Keren: by doing pop(), the stack will be modified already
+        let cur = stack.pop();
+        res.push(cur.val);
+        if (cur.left) {
+            stack.push(cur.left);
+        }
+        if (cur.right) {
+            stack.push(cur.right);
+        }
+    }
+    // reverse the res array
+    return res.reverse();
 };
