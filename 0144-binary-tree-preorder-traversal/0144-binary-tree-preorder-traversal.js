@@ -11,27 +11,33 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-    // Recursion 3 Steps
-    // 1. determine the recursion function's parameters and return value    
-    // usually params are root and result [] to store the node values;
-    // usually return void because we will already store the value we want in params
-    // params: cur (current node), res []
-    // return: void
-
-    // 2. determine the termination condition
-    // when the current node is null, we will return
-    // 3. define the logic on each recursion level
-    // middle node: res.push(cur.val)
-    // left child: traversal(cur.left, res)
-    // right child: traversal(cur.right, res)
-
-    const traversal = (cur, res) => {
-        if (!cur) return;
-        res.push(cur.val);
-        traversal(cur.left, res);
-        traversal(cur.right, res);
+    // let's do it recursively
+    // pre-order: middle -> left -> right
+    // Idea: can we use preorderTraversal itself? instead of defining a new traverse recursion helper function?
+    
+    // Recursive 3 Steps
+    // 1. define recursion function's params and return value
+    // usually params are treeNode and a res array to store node values; and return void
+    const traversal = (root, res) => {
+        if (!root) return;
+        res.push(root.val);
+        if (root.left) {
+            traversal(root.left, res);
+        }
+        if (root.right) {
+            traversal(root.right, res);
+        }
     };
-    let res = [];
-    traversal(root, res);
-    return res;
+    // 2. determine termination condition
+    // when the current node is null, return;
+    
+    // 3. determine the logic at each traversal level
+    // middle: push the middle node's value into the res array
+    // left: call recursion function on the left child
+    // right: call recursion function on the right child
+    let result = [];
+    traversal(root, result);
+    return result;
+    
+    // Keren TODO: then let's do it iteratively
 };
