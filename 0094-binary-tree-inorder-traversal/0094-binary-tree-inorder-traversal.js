@@ -13,17 +13,29 @@
 var inorderTraversal = function(root) {
     // inorder: left child -> middle -> right child
     
-    // Recursively first
-    const traversal = (curNode, res) => {
-        if (!curNode) return;
-        traversal(curNode.left, res);
-        res.push(curNode.val);
-        traversal(curNode.right, res);
-    };
-    
-    let result = [];
-    traversal(root, result);
-    return result;
     // TODO: Iteratively
+    let res = [];
+    if (!root) return res;
+    
+    let cur = root;
+    let stack = [];
+    while (stack.length > 0 || cur !== null) {
+        while (cur !== null) {
+            stack.push(cur);
+            cur = cur.left;
+        }  
+        // here cur is null, (we went too far)
+        // so we update it properly to the parent node of the initial node (back to previous parent node)
+        cur = stack.pop();
+        res.push(cur.val);
+        if (cur.right) {
+            cur = cur.right;
+        } else {
+            cur = null;
+        }
+        // cur = cur.right;
+        console.log('log res', res);
+    }
+    return res;
     // maybe the while loop for this one needs two conditions? We'll see
 };
