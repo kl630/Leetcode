@@ -11,29 +11,24 @@
  * @return {number[]}
  */
 var postorderTraversal = function(root) {
-    // Recursive solution is trivial, could you do it iteratively?
+    // Recursively first
+    // postorder: left child -> right child -> middle
+    // Recursion 3 Steps
+    // 1. define recursion helper function's params and return value
+    const traversal = (root, res) => {
+        if (!root) return;
+        // left child
+        traversal(root.left, res);
+        // right child
+        traversal(root.right, res);
+        // middle
+        res.push(root.val);
+    };
+    // 2. termination condition
+    // 3. logic at each traversal level
+    let result = [];
+    traversal(root, result);
+    return result;
     
-    // pre-order is starting from root, then push in the right child, then left child
-    // post-order can be derived from pre-order and make some tweaks
-    // instead, we push in the left child first, then right child, so that we get
-    // mid-> right child -> left child
-    // then reverse the entire result so we get : left child -> right child -> mid,
-    // which is exactly post-order traversal
-    let stack = [];
-    let res = [];
-    if (!root) return res;
-    stack.push(root);
-    while (stack.length > 0) {
-        // Keren: by doing pop(), the stack will be modified already
-        let cur = stack.pop();
-        res.push(cur.val);
-        if (cur.left) {
-            stack.push(cur.left);
-        }
-        if (cur.right) {
-            stack.push(cur.right);
-        }
-    }
-    // reverse the res array
-    return res.reverse();
+    // Then iteratively
 };
