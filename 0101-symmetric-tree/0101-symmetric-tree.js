@@ -18,21 +18,26 @@ var isSymmetric = function(root) {
     // You can do it! Just give it a try.
     const isSame = (leftNode, rightNode) => {
         // termination condition
-        // Keren testing the return true part. Will test it out. Shouldn't return true.
-        // should go to the next level of recursion.
+        
+        // if( (leftNode !== null) && (rightNode !== null) 
+        //    && (leftNode.val === rightNode.val)) return;
+        
+        // Above: Shouldn't return true or anything.
+        // it should go to the next level of recursion.
+        
+        // But below is definitely a termination condition. That's how we find the ultimate result.
         if( (leftNode === null) && (rightNode === null)) return true;
         if( (leftNode === null) && (rightNode !== null)) return false;
         if( (leftNode !== null) && (rightNode === null)) return false;
         if( (leftNode !== null) && (rightNode !== null) 
            && (leftNode.val !== rightNode.val)) return false;
-        // if( (leftNode !== null) && (rightNode !== null) 
-        //    && (leftNode.val === rightNode.val)) return;
-        // left
-        isSame(leftNode.left, rightNode.right);
-        // right
-        isSame(leftNode.right, rightNode.left);
+
+        // outer
+        let outer = isSame(leftNode.left, rightNode.right);
+        // inner
+        let inner = isSame(leftNode.right, rightNode.left);
         // middle
-        let result = isSame(leftNode.left, rightNode.right) && isSame(leftNode.right, rightNode.left);
+        let result = outer && inner;
         return result;
     };
     
