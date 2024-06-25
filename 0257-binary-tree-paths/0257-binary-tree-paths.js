@@ -22,12 +22,12 @@ var binaryTreePaths = function(root) {
         }
         if (treeNode.left) {
             getPaths(treeNode.left, path, result);
-            path.pop();
         }
         if (treeNode.right) {
             getPaths(treeNode.right, path, result);
-            path.pop();
+            
         }
+        path.pop();
     };
     // traversal order: preorder
     // middle
