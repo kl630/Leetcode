@@ -15,19 +15,18 @@ var hasPathSum = function(root, targetSum) {
     const traversal = (root, count) => {
         if (root.left === null && root.right === null && count === 0) return true;
         if (root.left === null && root.right === null && count !== 0) return false;
-        // why the middle node doesn't matter here??
         if (root.left) {
-            count -= root.left.val
+            count -= root.left.val;
             if (traversal(root.left, count)) return true;
             count += root.left.val;
         }
         if (root.right) {
-            count -= root.right.val
+            count -= root.right.val;
             if (traversal(root.right, count)) return true;
             count += root.right.val;
         }
         return false;
     };
-    if (root === null) return false;
+    if (!root) return false;
     return traversal(root, targetSum - root.val);
 };
