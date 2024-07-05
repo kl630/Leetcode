@@ -11,32 +11,23 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
-    // helper recursion function getPaths(treeNode, path, result)
-    // termination condition: when reaching the leaf node, then push current path
-    // to the result array
-    const getPaths = (treeNode, path, result) => {
-        path.push(treeNode.val);
-        if (treeNode.left === null && treeNode.right === null) {
-            let pathString = path.join("->");
-            result.push(pathString);
+    // pre-order traversal
+    const traversal = (root, path, res) => {
+        path.push(root.val);
+        if (root.left === null && root.right === null) {
+            let pathString = path.join('->');
+            res.push(pathString);
         }
-        if (treeNode.left) {
-            getPaths(treeNode.left, path, result);
+        if (root.left) {
+            traversal(root.left, path, res);
+            path.pop();
         }
-        if (treeNode.right) {
-            getPaths(treeNode.right, path, result);
-            
+        if (root.right) {
+            traversal(root.right, path, res);
+            path.pop();
         }
-        path.pop();
     };
-    // traversal order: preorder
-    // middle
-    // left
-    // right
-    
-    // * backtracking * !!!
-    let path = [];
-    let res = [];
-    getPaths(root, path, res);
-    return res;
+    let result = [];
+    traversal(root, [], result);
+    return result;
 };
