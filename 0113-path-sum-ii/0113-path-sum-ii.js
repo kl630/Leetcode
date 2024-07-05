@@ -14,22 +14,25 @@
 var pathSum = function(root, targetSum) {
     // helper function: return void
     const traversal = (root, count, path, res) => {
-        path.push(root.val);
         if (root.left === null && root.right === null && count === 0) {
             res.push([...path]);
         }
         if (root.left) {
+            path.push(root.left.val);
             traversal(root.left, count - root.left.val, path, res);
             path.pop();
         }
         if (root.right) {
+            path.push(root.right.val);
             traversal(root.right, count - root.right.val, path, res);
             path.pop();
         }
     };
     
     let result = [];
+    let path = [];
     if (!root) return result;
-    traversal(root, targetSum - root.val, [], result);
+    path.push(root.val);
+    traversal(root, targetSum - root.val, path, result);
     return result;
 };
