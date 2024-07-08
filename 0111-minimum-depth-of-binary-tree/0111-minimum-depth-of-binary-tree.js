@@ -11,19 +11,15 @@
  * @return {number}
  */
 var minDepth = function(root) {
-    // leveraging height === depth;
-    // we will use postorder traversal to calculate height instead
-    // choose the lesser one
-    // special case: if the root has only one chid, we shouldn't just return 1 as its min depth
-    // we still need to go to the other child and find its min depth instead
-    // down to the nearest leaf node
+    // if there is no left subtree, we need to go to the right side to find the min depth
+    // vice versa
     let res = 0;
     if (!root) return res;
     if (!root.left) return minDepth(root.right) + 1;
     if (!root.right) return minDepth(root.left) + 1;
+    // postorder traversal
     let leftHeight = minDepth(root.left);
     let rightHeight = minDepth(root.right);
     res = Math.min(leftHeight, rightHeight) + 1;
-    
     return res;
 };
