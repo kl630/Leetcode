@@ -12,27 +12,20 @@
  * @return {boolean}
  */
 var isSameTree = function(p, q) {
-    // Keren question: Why can't we use preorder traversal? 
+    // traversing 2 trees at the same time
+    if (!p && !q) {
+        return true;
+    } else if (!p || !q) {
+        return false;
+    } else if (p.val !== q.val) {
+        return false;
+    }
     
-    // traversing two trees at the same time
-    // we can just use isSameTree function : params: p and q; return: boolean value
-    // termination condition
-    // node from tree p && node from tree q: only one of them is null: return false
-    // both are null: return true
-    // both are not null, && values are different, return false
-    if (p === null && q === null) return true;
-    if (p !== null && q === null) return false;
-    if (p === null && q !== null) return false;
-    if (p !== null && q !== null && p.val !== q.val) return false; 
-
-    
-    // logic at each traversal level
-    // postorder traversal: 
-    // left
-    let leftSide = isSameTree(p.left, q.left);
-    // right
-    let rightSide = isSameTree(p.right, q.right);
-    // middle
-    let result = leftSide && rightSide;
-    return result;
+    // left:
+    let leftRes = isSameTree(p.left, q.left);
+    // right:
+    let rightRes = isSameTree(p.right, q.right);
+    // middle:
+    let res = leftRes && rightRes;
+    return res;
 };
