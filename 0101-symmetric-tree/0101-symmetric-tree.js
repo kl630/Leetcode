@@ -11,34 +11,24 @@
  * @return {boolean}
  */
 var isSymmetric = function(root) {
-    // helper function compare, takes two params, left child, right child 
-    // return a boolean value
-    // postorder traversal
+    // traversing two trees at the same time: postorder
     
-    // You can do it! Just give it a try.
+    // helper function isSame returns a boolean value
     const isSame = (leftNode, rightNode) => {
-        // termination condition
-        
-        // if( (leftNode !== null) && (rightNode !== null) 
-        //    && (leftNode.val === rightNode.val)) return;
-        
-        // Above: Shouldn't return true or anything.
-        // it should go to the next level of recursion.
-        
-        // But below is definitely a termination condition. That's how we find the ultimate result.
-        if( (leftNode === null) && (rightNode === null)) return true;
-        if( (leftNode === null) && (rightNode !== null)) return false;
-        if( (leftNode !== null) && (rightNode === null)) return false;
-        if( (leftNode !== null) && (rightNode !== null) 
-           && (leftNode.val !== rightNode.val)) return false;
-
-        // outer
+        if (!leftNode && !rightNode) {
+            return true;
+        } else if (!leftNode || !rightNode) {
+            return false;
+        } else if (leftNode.val !== rightNode.val) {
+            return false;
+        } 
+        // left:
         let outer = isSame(leftNode.left, rightNode.right);
-        // inner
+        // right:
         let inner = isSame(leftNode.right, rightNode.left);
-        // middle
-        let result = outer && inner;
-        return result;
+        // middle:
+        let res = outer && inner;
+        return res; 
     };
     
     return isSame(root.left, root.right);
