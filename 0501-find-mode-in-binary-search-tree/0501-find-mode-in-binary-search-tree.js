@@ -15,36 +15,33 @@ var findMode = function(root) {
     let count = 0;
     let maxCount = 0;
     let result = [];
+    
     const traversal = (cur) => {
-        // inorder: left -> middle -> right
-        // base case:
-        if (!cur) return;
-        
+        if(!cur) return;
         // left:
         traversal(cur.left);
         // middle:
-        if (pre === null) {
+        if (!pre) {
             count = 1;
-        } else if (pre !== null && pre.val === cur.val) {
-            count++;
-        } else if (pre !== null && pre.val !== cur.val) {
+        } else if (pre.val === cur.val) {
+            count ++;
+        } else if (pre.val !== cur.val) {
             count = 1;
-        }
-        pre = cur;
-
-        if (count === maxCount) {
-            maxCount = count;
-            result.push(cur.val);
-        }
-        if (count > maxCount) {
-            result = [];
-            maxCount = count;
-            result.push(cur.val);
         }
         
+        if (count === maxCount) {
+            result.push(cur.val);  
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            result = [];
+            result.push(cur.val);
+        }
+        pre = cur;
         // right:
         traversal(cur.right);
     };
+    
     traversal(root);
     return result;
 };
