@@ -12,18 +12,18 @@
  * @return {TreeNode}
  */
 var lowestCommonAncestor = function(root, p, q) {
-    // postorder: left -> right -> middle
+    // postorder traversal
     if (!root) return null;
-    
-    if (root === p || root === q) {
-        return root;
-    }
+    if (root === p || root === q) return root;
     
     let leftRes = lowestCommonAncestor(root.left, p, q);
-    
     let rightRes = lowestCommonAncestor(root.right, p, q);
     
-    if (!leftRes && rightRes) return rightRes;
-    if (leftRes && !rightRes) return leftRes;
-    if (leftRes && rightRes) return root;
+    if (leftRes && rightRes) {
+        return root
+    } else if (leftRes && !rightRes) {
+        return leftRes
+    } else if (!leftRes && rightRes) {
+        return rightRes;
+    }
 };
