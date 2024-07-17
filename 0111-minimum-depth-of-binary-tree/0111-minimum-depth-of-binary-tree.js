@@ -11,15 +11,16 @@
  * @return {number}
  */
 var minDepth = function(root) {
-    // if there is no left subtree, we need to go to the right side to find the min depth
-    // vice versa
-    let res = 0;
-    if (!root) return res;
-    if (!root.left) return minDepth(root.right) + 1;
-    if (!root.right) return minDepth(root.left) + 1;
-    // postorder traversal
-    let leftHeight = minDepth(root.left);
-    let rightHeight = minDepth(root.right);
-    res = Math.min(leftHeight, rightHeight) + 1;
-    return res;
+    let result = 0;
+    if (!root) return result;
+    if (!root.left) {
+        return minDepth(root.right) + 1;
+    } else if (!root.right) {
+        return minDepth(root.left) + 1;
+    }
+    
+    let leftRes = minDepth(root.left);
+    let rightRes = minDepth(root.right);
+    result = Math.min(leftRes, rightRes) + 1;
+    return result;
 };
