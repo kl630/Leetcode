@@ -12,20 +12,16 @@
  * @return {boolean}
  */
 var isSameTree = function(p, q) {
-    // traversing 2 trees at the same time
     if (!p && !q) {
         return true;
     } else if (!p || !q) {
         return false;
-    } else if (p.val !== q.val) {
+    } else if (p && q && p.val !== q.val) {
         return false;
     }
     
-    // left:
     let leftRes = isSameTree(p.left, q.left);
-    // right:
     let rightRes = isSameTree(p.right, q.right);
-    // middle:
-    let res = leftRes && rightRes;
-    return res;
+    result = leftRes && rightRes;
+    return result;
 };
