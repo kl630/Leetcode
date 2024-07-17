@@ -11,25 +11,19 @@
  * @return {boolean}
  */
 var isSymmetric = function(root) {
-    // traversing two trees at the same time: postorder
-    
-    // helper function isSame returns a boolean value
-    const isSame = (leftNode, rightNode) => {
-        if (!leftNode && !rightNode) {
+    const compare = (root1, root2) => {
+        if (!root1 && !root2) {
             return true;
-        } else if (!leftNode || !rightNode) {
+        } else if (!root1 || !root2) {
             return false;
-        } else if (leftNode.val !== rightNode.val) {
+        } else if (root1 && root2 && root1.val !== root2.val) {
             return false;
-        } 
-        // left:
-        let outer = isSame(leftNode.left, rightNode.right);
-        // right:
-        let inner = isSame(leftNode.right, rightNode.left);
-        // middle:
-        let res = outer && inner;
-        return res; 
+        }
+        
+        let leftRes = compare(root1.left, root2.right);
+        let rightRes = compare(root1.right, root2.left);
+        return leftRes && rightRes;
     };
-    
-    return isSame(root.left, root.right);
+        
+    return compare(root.left, root.right);
 };
