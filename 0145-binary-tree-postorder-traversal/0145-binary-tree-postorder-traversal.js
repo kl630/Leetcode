@@ -11,24 +11,19 @@
  * @return {number[]}
  */
 var postorderTraversal = function(root) {
-    // Recursively first
-    // postorder: left child -> right child -> middle
-    // Recursion 3 Steps
-    // 1. define recursion helper function's params and return value
-    const traversal = (root, res) => {
-        if (!root) return;
-        // left child
-        traversal(root.left, res);
-        // right child
-        traversal(root.right, res);
-        // middle
-        res.push(root.val);
+    // left -> right -> middle
+    const traversal = (cur, res) => {
+        if (!cur) return;
+        if (cur.left) {
+            traversal(cur.left, res);
+        }
+        if (cur.right) {
+            traversal(cur.right, res);
+        }
+        res.push(cur.val);
     };
-    // 2. termination condition
-    // 3. logic at each traversal level
+    
     let result = [];
     traversal(root, result);
     return result;
-    
-    // Then iteratively
 };
