@@ -11,7 +11,8 @@
  * @return {boolean}
  */
 var isSymmetric = function(root) {
-    const compare = (root1, root2) => {
+  // postorder traversal: left -> right -> middle
+    const isSame = (root1, root2) => {
         if (!root1 && !root2) {
             return true;
         } else if (!root1 || !root2) {
@@ -20,10 +21,11 @@ var isSymmetric = function(root) {
             return false;
         }
         
-        let leftRes = compare(root1.left, root2.right);
-        let rightRes = compare(root1.right, root2.left);
-        return leftRes && rightRes;
+        let outer = isSame(root1.left, root2.right);
+        let inner = isSame(root1.right, root2.left);
+        let result = outer && inner;
+        return result;
     };
-        
-    return compare(root.left, root.right);
+    
+    return isSame(root.left, root.right);
 };
