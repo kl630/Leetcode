@@ -15,12 +15,13 @@ var minDepth = function(root) {
     if (!root) return result;
     if (!root.left) {
         return minDepth(root.right) + 1;
-    } else if (!root.right) {
-        return minDepth(root.left) + 1;
     }
-    
-    let leftRes = minDepth(root.left);
-    let rightRes = minDepth(root.right);
-    result = Math.min(leftRes, rightRes) + 1;
+    if (!root.right) {
+       return minDepth(root.left) + 1;
+    }
+    // postorder traversal
+    let leftHeight = minDepth(root.left);
+    let rightHeight = minDepth(root.right);
+    result = Math.min(leftHeight, rightHeight) + 1;
     return result;
 };
