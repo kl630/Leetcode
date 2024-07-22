@@ -15,12 +15,14 @@
 var trimBST = function(root, low, high) {
     if (!root) return null;
     if (root.val < low) {
-        return trimBST(root.right, low, high);
+        root = root.right;
+        return trimBST(root, low, high);
     } else if (root.val >= low && root.val <= high) {
         root.left = trimBST(root.left, low, high);
         root.right = trimBST(root.right, low, high);
     } else if (root.val > high) {
-        return trimBST(root.left, low, high);
+        root = root.left;
+        return trimBST(root, low, high);
     }
     return root;
 };
