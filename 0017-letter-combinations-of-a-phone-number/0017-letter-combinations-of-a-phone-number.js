@@ -5,7 +5,6 @@
 var letterCombinations = function(digits) {
     let res = [];
     let path = '';
-    
     const dict = {
         '2': [ 'a', 'b', 'c' ],
         '3': [ 'd', 'e', 'f' ],
@@ -25,27 +24,25 @@ var letterCombinations = function(digits) {
         
         // 2. termination condition
         if (targetLen === 0) return; 
-        if (path.length === targetLen) {
+        // if (path.length === targetLen) {
+        //     res.push(path);
+        //     return;
+        // }
+        if (elemIndex === elems.length) {
             res.push(path);
             return;
         }
-        if (elemIndex >= elems.length) return;
         // 3. logic at each recursion level
-        // first need to do the lookup
-        // Character access
-        // There are two ways to access an individual character in a string. The first          is the charAt() method:
         console.log('log elemIndex', elemIndex);
-
+        
+        // first need to do the lookup
         let characters = dict[elems[elemIndex]];
         console.log('log characters', characters);
 
         for (let i = 0; i < characters.length; i++) {
-            console.log('log characters[i]', characters[i]);
-
             path = path.concat(characters[i]);
             console.log('log before-path', path);
             backtracking(digits, digits.length, elemIndex + 1)
-            // Can string to .pop()? No!!!
             path = path.slice(0, path.length - 1);
             console.log('log after-path', path);
         }        
