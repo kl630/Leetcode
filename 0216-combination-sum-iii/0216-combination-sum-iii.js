@@ -4,6 +4,7 @@
  * @return {number[][]}
  */
 var combinationSum3 = function(k, n) {
+    // With Pruning
     const getSum = (arr) => {
         let res = 0;
         for (let i = 0; i < arr.length; i++) {
@@ -26,9 +27,14 @@ var combinationSum3 = function(k, n) {
         }
         // 3. logic at each recursion level  
         for (let i = startIndex; i <= 9; i++) {
-            path.push(i);
-            backtracking(k, i + 1, n);
-            path.pop();
+            if (getSum([...path]) > n) {
+                return;
+            } else {
+                path.push(i);
+                backtracking(k, i + 1, n);
+                path.pop();    
+            }
+
         }
     };
 
