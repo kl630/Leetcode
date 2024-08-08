@@ -11,25 +11,18 @@
  * @return {number}
  */
 var findTilt = function(root) {
-    let totalTilt = 0;
-
-    const getSum = function(node) {
+    let result = 0;
+    if (!root) return result;
+    
+    const traversal = (node) => {
         if (!node) return 0;
-        return node.val + getSum(node.left) + getSum(node.right);
+        let leftSum = traversal(node.left);
+        let rightSum = traversal(node.right);
+        result += Math.abs(leftSum - rightSum);
+        
+        return leftSum + rightSum + node.val;
     };
-
-    const postorder = function(node) {
-        if (!node) return;
-        
-        postorder(node.left);
-        postorder(node.right);
-        
-        let leftSum = getSum(node.left);
-        let rightSum = getSum(node.right);
-        
-        totalTilt += Math.abs(leftSum - rightSum);
-    };
-
-    postorder(root);
-    return totalTilt;
+    
+    traversal(root);
+    return result;
 };
