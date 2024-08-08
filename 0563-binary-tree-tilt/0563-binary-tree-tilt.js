@@ -12,22 +12,24 @@
  */
 var findTilt = function(root) {
     let totalTilt = 0;
-    
-    const postorder = (node) => {
+
+    const getSum = function(node) {
         if (!node) return 0;
-        
-        // Postorder: left, right, node
-        let leftSum = postorder(node.left);
-        let rightSum = postorder(node.right);
-        
-        // Calculate tilt for the current node
-        let tilt = Math.abs(leftSum - rightSum);
-        totalTilt += tilt;
-        
-        // Return the sum of values in the subtree rooted at this node
-        return node.val + leftSum + rightSum;
+        return node.val + getSum(node.left) + getSum(node.right);
     };
-    
+
+    const postorder = function(node) {
+        if (!node) return;
+        
+        postorder(node.left);
+        postorder(node.right);
+        
+        let leftSum = getSum(node.left);
+        let rightSum = getSum(node.right);
+        
+        totalTilt += Math.abs(leftSum - rightSum);
+    };
+
     postorder(root);
     return totalTilt;
 };
