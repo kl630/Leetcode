@@ -11,23 +11,30 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
-    // pre-order traversal
-    const traversal = (root, path, res) => {
-        path.push(root.val);
-        if (root.left === null && root.right === null) {
-            let pathString = path.join('->');
-            res.push(pathString);
+    let result = [];
+
+    const traversal = (node, path) => {
+        // pre-order traversal
+        // need to reach the leaf nodes
+        path.push(node.val);
+
+        if (node && node.left === null && node.right === null) {
+            let pathStr = path.join('->');
+            // result.push([...path].join('->'));
+            result.push(pathStr);
+            // return;
         }
-        if (root.left) {
-            traversal(root.left, path, res);
+        
+        if (node.left) {
+            traversal(node.left, path);
             path.pop();
         }
-        if (root.right) {
-            traversal(root.right, path, res);
+        if (node.right) {
+            traversal(node.right, path);
             path.pop();
         }
     };
-    let result = [];
-    traversal(root, [], result);
+    
+    traversal(root, []);
     return result;
 };
