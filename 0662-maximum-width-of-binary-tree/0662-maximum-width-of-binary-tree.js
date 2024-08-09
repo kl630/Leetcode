@@ -11,28 +11,28 @@
  * @return {number}
  */
 var widthOfBinaryTree = function(root) {
-    if (!root) return 0;
-    
+    // node and index
     let maxWidth = 0;
-    let queue = [{ node: root, index: 0 }];
+    let queue = [];
+    queue.push({ node: root, index: 0});
     
     while (queue.length > 0) {
-        let levelLength = queue.length;
-        let firstIndex = queue[0].index;
-        let lastIndex = queue[levelLength - 1].index;
+        let size = queue.length;
+        let firstNodeIndex = queue[0].index;
+        let lastNodeIndex = queue[size - 1].index;
+        curWidth = lastNodeIndex - firstNodeIndex + 1;
+        maxWidth = Math.max(maxWidth, curWidth);
         
-        // Calculate width for the current level
-        maxWidth = Math.max(maxWidth, lastIndex - firstIndex + 1);
-        
-        for (let i = 0; i < levelLength; i++) {
+        while (size--) {
             let { node, index } = queue.shift();
-            index -= firstIndex; // Normalize the index
+            // index = 0;
+            index -= firstNodeIndex;
             
             if (node.left) {
-                queue.push({ node: node.left, index: 2 * index });
+                queue.push({ node: node.left, index: index * 2 });
             }
             if (node.right) {
-                queue.push({ node: node.right, index: 2 * index + 1 });
+                queue.push({ node: node.right, index: index * 2 + 1 });
             }
         }
     }
