@@ -25,7 +25,7 @@ var combinationSum2 = function(candidates, target) {
         // e.g. [2,5,2,1,2]
         const sortedIntegers = integers.sort((a, b) => a - b);
         for (let i = startIndex; i < sortedIntegers.length; i++) {
-            if ((i > startIndex) && sortedIntegers[i] === sortedIntegers[i - 1]) {
+            if ((i !== startIndex) && sortedIntegers[i] === sortedIntegers[i - 1]) {
                 continue;
             }
             path.push(sortedIntegers[i]);
