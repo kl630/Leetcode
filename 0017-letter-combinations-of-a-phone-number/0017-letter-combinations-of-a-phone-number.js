@@ -1,35 +1,34 @@
-/**
- * @param {string} digits
- * @return {string[]}
- */
 var letterCombinations = function(digits) {
-    let res = [];
-    if (digits.length === 0) return res;
-    
-    let path = '';
+	let result = [];
+	if (digits.length === 0) return result;
+	let path = [];
     const dict = {
         '2': [ 'a', 'b', 'c' ], 
         '3': [ 'd', 'e', 'f' ], 
         '4': [ 'g', 'h', 'i' ], 
-        '5': [ 'j', 'k', 'l' ], 
+        '5': [ 'j', 'k', 'l' ],  
         '6': [ 'm', 'n', 'o' ], 
         '7': [ 'p', 'q', 'r', 's' ], 
         '8': [ 't', 'u', 'v' ], 
         '9': [ 'w', 'x', 'y', 'z' ], 
     };
-    const backtracking = (elems, targetLen, elemIndex) => {
-        if (elemIndex === targetLen) {
-            res.push(path);
-            return;
-        }
-        let characters = dict[elems[elemIndex]];
-        for (let i = 0; i < characters.length; i++) {
-            path = path.concat(characters[i]);
-            backtracking(elems, targetLen, elemIndex + 1);
-            path = path.slice(0, path.length - 1);
-        }
+
+    const backtracking = (index) => {
+        // termination condition
+    if (path.length === digits.length) {
+        let pathStr = path.join('');
+        result.push(pathStr);
+        return;
+    }
+        
+    let characters = dict[digits[index]];
+    for (let i = 0; i < characters.length; i++) {
+        path.push(characters[i]);
+        backtracking(index + 1);
+        path.pop();
+    }	
     };
-    
-    backtracking(digits, digits.length, 0);
-    return res;
+
+    backtracking(0);
+    return result;    
 };
