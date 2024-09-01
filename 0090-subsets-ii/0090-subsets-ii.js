@@ -9,7 +9,7 @@ var subsetsWithDup = function(nums) {
 
         let sortedNums = nums.sort((a, b) => a - b);
         for (let i = startIndex; i < sortedNums.length; i++) {
-            if (i > startIndex && sortedNums[i] === sortedNums[i - 1]) {
+            if (i !== startIndex && sortedNums[i] === sortedNums[i - 1]) {
                 continue;
             }
             path.push(sortedNums[i]);
