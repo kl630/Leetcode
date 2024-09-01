@@ -1,11 +1,11 @@
 var subsetsWithDup = function(nums) {
     let result = [];
     let path = [];    
-    // result.push([...path]);
+    result.push([...path]);
 
     const backtracking = (startIndex) => {
     // no need for termination condition
-        result.push([...path]);
+        // result.push([...path]);
 
         let sortedNums = nums.sort((a, b) => a - b);
         for (let i = startIndex; i < sortedNums.length; i++) {
@@ -13,6 +13,8 @@ var subsetsWithDup = function(nums) {
                 continue;
             }
             path.push(sortedNums[i]);
+            result.push([...path]);
+
             backtracking(i + 1);
             path.pop();
         }
