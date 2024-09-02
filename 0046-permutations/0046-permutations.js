@@ -1,22 +1,32 @@
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
 var permute = function(nums) {
+    // instead of splice method, try using "used" tag
     let result = [];
     let path = [];
+    let used = Array(nums.length).fill(false);
+    const backtracking = () => {
+            if (path.length === nums.length) {
+                result.push([...path]);
+                return;
+            }
+        
+            for (let i = 0; i < nums.length; i++) {
+                if (used[i]) {
+                    continue;
+                } else {
+                    path.push(nums[i]);
+                    used[i] = true;
+                    backtracking(i); 
+                    path.pop();
+                    used[i] = false;
+                }
+            }
 
-    const backtracking = (choicesArr)  => {
-        if (path.length === nums.length) {
-            result.push([...path]);
-            return;
-    }
-    for (let i = 0; i < choicesArr.length; i++) {
-        path.push(choicesArr[i]);
-        let arrCopy = [...choicesArr];
-        arrCopy.splice(i, 1);
-        console.log('log arrCopy after deletion', arrCopy);
-        backtracking(arrCopy);
-        path.pop();
-    }
     };
-
-    backtracking(nums);
+    backtracking();
     return result;
+
 };
