@@ -3,33 +3,27 @@
  * @return {number[][]}
  */
 var allPathsSourceTarget = function(graph) {
-    const n = graph.length;
-    const adjacencyMatrix = Array.from({ length: n }, () => Array(n).fill(0));
-
-    for (let i = 0; i < graph.length; i++) {
-        for (const neighbor of graph[i]) {
-            adjacencyMatrix[i][neighbor] = 1;
-        }
-    }
+    // DFS - Depth First Search
+    // 1.  define recursion function and params
+    // 2. decide on when to terminate the recursion
+    // 3. traverse
     let res = [];
     let path = [];
 
-    function dfs(start) {
-        if (start === adjacencyMatrix.length - 1) { // Reached the target
+    function dfs(graph, start) {
+        if (start === graph.length - 1) { // base case: when start node is the last node
             res.push([...path]);
             return;
         }
-
-        for (let i = 0; i < adjacencyMatrix.length; i++) {
-            if (adjacencyMatrix[start][i] === 1) { // There's an edge from start to i
-                path.push(i);
-                dfs(i);
-                path.pop(); // Backtrack
-            }
+        for (let i = 0; i < graph[start].length; i++) {
+            path.push(graph[start][i]);
+            dfs(graph, graph[start][i]);
+            path.pop(); // the neighbor node is removed from the path to backtrack and 
+                        // explore other paths
         }
     }
 
-    path.push(0); // Start from node 0
-    dfs(0);
+    path.push(0);
+    dfs(graph, 0);
     return res;
 };
