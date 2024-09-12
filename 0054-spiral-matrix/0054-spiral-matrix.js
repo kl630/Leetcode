@@ -1,51 +1,88 @@
-
-/**
- * @param {number[][]} matrix
- * @return {number[]}
- */
 var spiralOrder = function(matrix) {
-    // output: [] a one-dimensional array
     let result = [];
-    // traverse the matrix
-//     let i = 0;
-//     let j = 0;
-//     let offset = 0;
     
-//     while (j < matrix[0].length) {
-//         result.push(matrix[i][j]);
-//         j ++;
-//     }
-    let top = 0, bottom = matrix.length - 1;
-    let left = 0, right = matrix[0].length - 1;
+    // Handle edge case for empty matrix
+    if (matrix.length === 0) return result;
     
-    while (top <= bottom && left <= right) {
-        // Traverse from left to right along the top row
-        for (let j = left; j <= right; j++) {
-            result.push(matrix[top][j]);
+    let rowStart = 0;
+    let rowEnd = matrix.length - 1;
+    let colStart = 0;
+    let colEnd = matrix[0].length - 1;
+    
+    while (rowStart <= rowEnd && colStart <= colEnd) {
+        // Traverse right
+        for (let j = colStart; j <= colEnd; j++) {
+            result.push(matrix[rowStart][j]);
         }
-        top++; // Move the top boundary down
-
-        // Traverse from top to bottom along the right column
-        for (let i = top; i <= bottom; i++) {
-            result.push(matrix[i][right]);
+        rowStart++; // Move down
+        
+        // Traverse down
+        for (let i = rowStart; i <= rowEnd; i++) {
+            result.push(matrix[i][colEnd]);
         }
-        right--; // Move the right boundary left
-
-        // Traverse from right to left along the bottom row, if still valid
-        if (top <= bottom) {
-            for (let j = right; j >= left; j--) {
-                result.push(matrix[bottom][j]);
+        colEnd--; // Move left
+        
+        // Traverse left
+        if (rowStart <= rowEnd) {
+            for (let j = colEnd; j >= colStart; j--) {
+                result.push(matrix[rowEnd][j]);
             }
-            bottom--; // Move the bottom boundary up
+            rowEnd--; // Move up
         }
-
-        // Traverse from bottom to top along the left column, if still valid
-        if (left <= right) {
-            for (let i = bottom; i >= top; i--) {
-                result.push(matrix[i][left]);
+        
+        // Traverse up
+        if (colStart <= colEnd) {
+            for (let i = rowEnd; i >= rowStart; i--) {
+                result.push(matrix[i][colStart]);
             }
-            left++; // Move the left boundary right
+            colStart++; // Move right
         }
     }
+    
     return result;
 };
+
+// /**
+//  * @param {number[][]} matrix
+//  * @return {number[]}
+//  */
+// var spiralOrder = function(matrix) {
+//     let result = [];
+//     let colStart = 0;
+//     let colEnd = matrix[0].length - 1;
+//     let rowStart = 0;
+//     let rowEnd = matrix.length - 1;
+    
+//     // how to control the traversal? When to stop it?
+//     while (colStart <= colEnd && rowStart <= rowEnd) {
+//         // Traverse right: for loop. TODO: Can I use while loop?
+//         for (let i = colStart; i <= colEnd; i++) {
+//             result.push(matrix[rowStart][i]);
+//         }
+//         rowStart++;
+        
+//         // Traverse down
+//         for (let i = rowStart; i <= rowEnd; i++) {
+//             result.push(matrix[i][colEnd]);
+//         }
+//         colEnd--;
+        
+//         // Traverse left
+//         if (colStart <= colEnd) {
+//             for (let i = colEnd; i >= colStart; i--) {
+//                 result.push(matrix[rowEnd][i]);
+//             }
+//             rowEnd--;
+//         }
+    
+//         // Traverse up
+//         if (rowStart <= rowEnd) {
+//             for (let i = rowEnd; i >= rowStart; i--) {
+//                 result.push(matrix[i][colStart]);
+//             }
+//             colStart++;
+//         }
+//     }
+    
+//     return result;
+// };
