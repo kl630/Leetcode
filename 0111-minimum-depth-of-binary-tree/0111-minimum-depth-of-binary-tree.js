@@ -11,17 +11,22 @@
  * @return {number}
  */
 var minDepth = function(root) {
-    let result = 0;
-    if (!root) return result;
-    if (!root.left) {
-        return minDepth(root.right) + 1;
-    }
-    if (!root.right) {
-       return minDepth(root.left) + 1;
-    }
-    // postorder traversal
-    let leftHeight = minDepth(root.left);
-    let rightHeight = minDepth(root.right);
-    result = Math.min(leftHeight, rightHeight) + 1;
-    return result;
+    // depth === height
+    const getHeight = (root) => {
+        if (!root) return 0;
+        // post-order traversal
+        let leftHeight = getHeight(root.left);
+        let rightHeight = getHeight(root.right);
+        // This is wrong!!
+        // let result = Math.min(leftHeight, rightHeight) + 1;
+        if (!root.left) {
+            return rightHeight + 1;
+        }
+        if (!root.right) {
+            return leftHeight + 1;
+        }
+        return Math.min(leftHeight, rightHeight) + 1;
+    };
+    
+    return getHeight(root);
 };
