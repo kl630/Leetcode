@@ -12,32 +12,22 @@
  * @return {boolean}
  */
 var isSubtree = function(root, subRoot) {
-    // Nested recursion!!!
-    // starting with isSameTree
-    const isSameTree = (root1, root2) => {
-        if (!root1 && !root2) {
-            return true;
-        } else if (!root1 || !root2) {
-            return false;
-        } else if (root1.val !== root2.val) {
-            return false;
-        }
-        
-        let leftRes = isSameTree(root1.left, root2.left);
-        let rightRes = isSameTree(root1.right, root2.right);
-        let res = leftRes && rightRes;
-        return res;
-    };
     
-    // need to call "isSameTree" recursively on each node in root && just subRoot
-    // need to traverse root tree
+    const isSame = (root1, root2) => {
+        if (!root1 && !root2) return true;
+        if (!root1 || !root2) return false;
+        if (root1 && root2 && root1.val !== root2.val) return false;
+        
+        // post-order traversal
+        // left -> right -> middle
+        let leftRes = isSame(root1.left, root2.left);
+        let rightRes = isSame(root1.right, root2.right);
+        let result = leftRes && rightRes;
+        return result;
+    };
     if (!root) return false;
-    if (isSameTree(root, subRoot)) return true;
-    // left:
-    let leftSubTree = isSubtree(root.left, subRoot);
-    // right:
-    let rightSubTree = isSubtree(root.right, subRoot);
-
-    let result = leftSubTree || rightSubTree;
-    return result;
+    if (isSame(root, subRoot)) return true;
+    let left = isSubtree(root.left, subRoot);
+    let right = isSubtree(root.right, subRoot);
+    return left || right;
 };
