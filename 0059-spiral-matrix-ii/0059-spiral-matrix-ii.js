@@ -10,8 +10,8 @@ var generateMatrix = function(n) {
     let rowStart = 0;
     let rowEnd = n - 1;
     
-    // while (elem <= n * n) {
-    while (colStart <= colEnd && rowStart <= rowEnd) {
+    while (elem <= n * n) {
+    // while (colStart <= colEnd && rowStart <= rowEnd) {
         // Traverse right
         for (let i = colStart; i <= colEnd; i++) {
             result[rowStart][i] = elem;
