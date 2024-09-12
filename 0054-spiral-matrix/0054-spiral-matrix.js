@@ -36,7 +36,7 @@ var spiralOrder = function(matrix) {
                 result.push(matrix[i][colStart]);
             }
             colStart++; // Move right
-        }
+        }   
     }
     
     return result;
