@@ -11,15 +11,17 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-    // middle -> left -> right
-    const traversal = (cur, res) => {
-        if (!cur) return;
-        res.push(cur.val);
-        traversal(cur.left, res);
-        traversal(cur.right, res);
-    };  
-
+    // TODO: 1. recursively
+    // pre-order: middle -> left -> right
     let result = [];
-    traversal(root, result);
+    if (!root) return result;
+    result.push(root.val);
+    result = result.concat(preorderTraversal(root.left));
+    
+    result = result.concat(preorderTraversal(root.right));
+    
     return result;
+    // TODO: 2. iteratively- stack
+    
+    
 };
