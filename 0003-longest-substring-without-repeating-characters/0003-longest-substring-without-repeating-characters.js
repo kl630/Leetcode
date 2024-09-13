@@ -18,7 +18,8 @@ var lengthOfLongestSubstring = function(s) {
         // if s[right] doesn't exist in record Set
         // add it to the record
         record.add(s[right]);
-        result = Math.max(result, right - left + 1);
+        // result = Math.max(result, right - left + 1);
+        result = Math.max(result, record.size);
     }
     
     return result;
