@@ -14,12 +14,14 @@ var preorderTraversal = function(root) {
     // TODO: 1. recursively
     // pre-order: middle -> left -> right
     let result = [];
-    if (!root) return result;
-    result.push(root.val);
-    result = result.concat(preorderTraversal(root.left));
-    
-    result = result.concat(preorderTraversal(root.right));
-    
+    const traversal = (root) => {
+        if (!root) return;
+        
+        result.push(root.val);
+        traversal(root.left);
+        traversal(root.right);
+    };
+    traversal(root);
     return result;
     // TODO: 2. iteratively- stack
     
