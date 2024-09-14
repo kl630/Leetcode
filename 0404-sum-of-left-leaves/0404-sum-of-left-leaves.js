@@ -11,20 +11,23 @@
  * @return {number}
  */
 var sumOfLeftLeaves = function(root) {
-    // can use the sumOfLeftLeaves function itself as the recursion function
-    // postorder traversal
-    // 1. recursion function's params: root and return value: result as an integer
-    // 2. termination condition
-    if (root === null) return 0;
-    // 3. logic at each traversal level ---- postorder traversal
-    // left:
-    let leftSum = sumOfLeftLeaves(root.left);
-    if (root.left && root.left.left === null && root.left.right === null) {
-        leftSum = root.left.val;
-    }
-    // right: 
-    let rightSum = sumOfLeftLeaves(root.right);
-    // middle:
-    let res = leftSum + rightSum;
-    return res;
+    let result = 0;
+    // what is a left leaf?
+    // it is a left node and it is the left child of its parent node
+    // if (root && root.left && !root.left.left && !root.left.right)
+    const traverse = (root) => {
+        // traversal order? pre-order: middle -> left -> right
+        if (!root) return;
+        if (root.left && !root.left.left && !root.left.right) {
+            result += root.left.val;
+        }
+        // middle: ???
+        // left
+        traverse(root.left);
+        // right
+        traverse(root.right);
+    };
+    // TODO: ??can I just use sumOfLeftLeaves function
+    traverse(root);
+    return result;
 };
