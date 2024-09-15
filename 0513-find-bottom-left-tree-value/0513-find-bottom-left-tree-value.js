@@ -11,27 +11,29 @@
  * @return {number}
  */
 var findBottomLeftValue = function(root) {
-    // as long as we traverse left before right
     let result;
-    let maxDepth = -Infinity;
-    const traversal = (root, depth) => {
-        if (!root) return;
-        if (depth > maxDepth) {
-            maxDepth = depth;
-            result = root.val;
+    let maxHeight = - Infinity;
+    // postorder: left -> right -> middle
+    // the deepest(highest) and the leftmost leaf node (doesn't have to be the left leaf)
+    const traverse = (root, height) => {
+        if (!root.left && !root.right) {
+            if (height > maxHeight) {
+                maxHeight = height;
+                result = root.val;
+            }
         }
+        
+        // left
         if (root.left) {
-            depth ++;
-            traversal(root.left, depth);
-            depth --;
+            traverse(root.left, height + 1);
         }
+        // right
         if (root.right) {
-            depth ++;
-            traversal(root.right, depth);
-            depth --;
+            traverse(root.right, height + 1);
         }
+            
     };
-    
-    traversal(root, 0, result);
+        
+    traverse(root, 0);
     return result;
 };
