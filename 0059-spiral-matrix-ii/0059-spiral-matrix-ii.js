@@ -3,46 +3,47 @@
  * @return {number[][]}
  */
 var generateMatrix = function(n) {
-    let result = Array.from({ length: n }, () => new Array(n).fill(0) );
-    let elem = 1;
+    let matrix = Array.from({ length: n }, () => new Array(n).fill(0));
+    
     let colStart = 0;
     let colEnd = n - 1;
     let rowStart = 0;
     let rowEnd = n - 1;
+    let count = 1;
     
-    while (elem <= n * n) {
-    // while (colStart <= colEnd && rowStart <= rowEnd) {
-        // Traverse right
+    while (colStart <= colEnd && rowStart <= rowEnd) {
+        // left -> right
         for (let i = colStart; i <= colEnd; i++) {
-            result[rowStart][i] = elem;
-            elem ++;
-        } 
+            matrix[rowStart][i] = count;
+            count++;
+        }
         rowStart++;
         
-        // Traverse down
+        // top -> down
         for (let i = rowStart; i <= rowEnd; i++) {
-            result[i][colEnd] = elem;
-            elem ++;
+            matrix[i][colEnd] = count;
+            count++;
         }
         colEnd--;
-           
-        // Traverse left
+        
+        // right -> left
         if (colStart <= colEnd) {
             for (let i = colEnd; i >= colStart; i--) {
-                result[rowEnd][i] = elem;
-                elem ++;
+                matrix[rowEnd][i] = count;
+                count++;
             }
             rowEnd--;
         }
         
-        // Traverse up
+        // bottom -> up
         if (rowStart <= rowEnd) {
             for (let i = rowEnd; i >= rowStart; i--) {
-                result[i][colStart] = elem;
-                elem ++;
+                matrix[i][colStart] = count;
+                count++;
             }
             colStart++;
         }
     }
-    return result;
+    
+    return matrix;
 };
