@@ -12,22 +12,20 @@
  * @return {boolean}
  */
 var isSubtree = function(root, subRoot) {
-    
+    // helper function isSame
     const isSame = (root1, root2) => {
         if (!root1 && !root2) return true;
         if (!root1 || !root2) return false;
         if (root1 && root2 && root1.val !== root2.val) return false;
         
-        // post-order traversal
-        // left -> right -> middle
-        let leftRes = isSame(root1.left, root2.left);
-        let rightRes = isSame(root1.right, root2.right);
-        let result = leftRes && rightRes;
-        return result;
+        return isSame(root1.left, root2.left) && isSame(root1.right, root2.right);
     };
+    
+    // then recursively call isSame ?? on each node of root (tree1)
     if (!root) return false;
-    if (isSame(root, subRoot)) return true;
-    let left = isSubtree(root.left, subRoot);
-    let right = isSubtree(root.right, subRoot);
-    return left || right;
+    if (isSame(root, subRoot)) {
+        return true;
+    }
+    let result = isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    return result;
 };
