@@ -1,6 +1,10 @@
+var TrieNode = function() {
+    this.children = {};
+    this.isEnd = false;
+};
 
 var Trie = function() {
-    this.root = {};
+    this.root = new TrieNode();
 };
 
 /** 
@@ -10,10 +14,10 @@ var Trie = function() {
 Trie.prototype.insert = function(word) {
     let node = this.root;
     for (let char of word) {
-        if (!node[char]) {
-            node[char] = {};
+        if (!node.children[char]) {
+            node.children[char] = new TrieNode();
         }
-        node = node[char];
+        node = node.children[char];
     }
     node.isEnd = true;
 };
@@ -25,10 +29,10 @@ Trie.prototype.insert = function(word) {
 Trie.prototype.search = function(word) {
     let node = this.root;
     for (let char of word) {
-        if (!node[char]) {
+        if (!node.children[char]) {
             return false; // If any character is missing, word is not in Trie
         }
-        node = node[char]; // Move to the next node
+        node = node.children[char]; // Move to the next node
     }
     return node.isEnd === true;
 };
@@ -40,10 +44,10 @@ Trie.prototype.search = function(word) {
 Trie.prototype.startsWith = function(prefix) {
     let node = this.root;
     for (let char of prefix) {
-        if (!node[char]) {
+        if (!node.children[char]) {
             return false; // If prefix is not present, return false
         }
-        node = node[char]; // Move to the next node
+        node = node.children[char]; // Move to the next node
     }
     return true; // Prefix exists in the Trie
 };
