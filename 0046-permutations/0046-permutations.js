@@ -3,15 +3,13 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-    // Permutations! Order matters. So no startIndex anymore.
-    // But need to check if the current integer has already been used or not
+     //   1    2    3
+    //  2 3
     let result = [];
     let path = [];
     let used = new Array(nums.length).fill(false);
-
     
     const backtracking = () => {
-        // termination condition
         if (path.length === nums.length) {
             result.push([...path]);
             return;
@@ -26,7 +24,6 @@ var permute = function(nums) {
                 used[i] = false;
             }
         }
-        
     };
     
     backtracking();
