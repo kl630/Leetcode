@@ -19,11 +19,12 @@ var subsetsWithDup = function(nums) {
         for (let i = startIndex; i < sortedNums.length; i++) {
             if (i !== startIndex && sortedNums[i] === sortedNums[i-1]) { // tree-level deduplication
                 continue;
-            } else { // TODO: Do we need else here??
+            } 
+            //else { // TODO: Do we need else here??
                 path.push(sortedNums[i]);
                 backtracking(i+1);
                 path.pop();
-            }
+            
             
         }   
     };
