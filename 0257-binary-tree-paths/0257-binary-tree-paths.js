@@ -11,30 +11,33 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
+    // Keren TODO: 2 ways
+    
     let result = [];
-
-    const traversal = (node, path) => {
-        // pre-order traversal
-        // need to reach the leaf nodes
-        path.push(node.val);
-
-        if (node && node.left === null && node.right === null) {
-            let pathStr = path.join('->');
-            // result.push([...path].join('->'));
-            result.push(pathStr);
-            // return;
+    let path = [];
+    
+    const traverse = (root) => {
+        if (!root) return;
+        
+        if (!root.left && !root.right) {
+            let strPath = path.join('->');
+            result.push(strPath);
+            return;
         }
         
-        if (node.left) {
-            traversal(node.left, path);
+        if (root.left) {
+            path.push(root.left.val);
+            traverse(root.left);
             path.pop();
         }
-        if (node.right) {
-            traversal(node.right, path);
+        
+        if (root.right) {
+            path.push(root.right.val);
+            traverse(root.right);
             path.pop();
         }
     };
-    
-    traversal(root, []);
+    path.push(root.val);
+    traverse(root);
     return result;
 };
