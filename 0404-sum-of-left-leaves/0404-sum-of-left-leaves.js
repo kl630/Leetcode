@@ -11,23 +11,17 @@
  * @return {number}
  */
 var sumOfLeftLeaves = function(root) {
-    let result = 0;
     // what is a left leaf?
-    // it is a left node and it is the left child of its parent node
-    // if (root && root.left && !root.left.left && !root.left.right)
-    const traverse = (root) => {
-        // traversal order? pre-order: middle -> left -> right
-        if (!root) return;
-        if (root.left && !root.left.left && !root.left.right) {
-            result += root.left.val;
-        }
-        // middle: ???
-        // left
-        traverse(root.left);
-        // right
-        traverse(root.right);
-    };
-    // TODO: ??can I just use sumOfLeftLeaves function
-    traverse(root);
+    // (parent): node.left && !node.left.left && !node.left.right
+    let result = 0;
+    // traversal order: postorder?
+    
+    if (!root) return 0;
+    if (root.left && !root.left.left && !root.left.right) {
+        result += root.left.val;
+    }
+    result += sumOfLeftLeaves(root.left);
+    result += sumOfLeftLeaves(root.right);
+    
     return result;
 };
