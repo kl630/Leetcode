@@ -12,21 +12,31 @@
  * @return {boolean}
  */
 var hasPathSum = function(root, targetSum) {
-    const traversal = (root, count) => {
-        if (root.left === null && root.right === null && count === 0) return true;
-        if (root.left === null && root.right === null && count !== 0) return false;
+    // post-order traversal?
+    
+    const traverse = (root, curCount) => {
+        // 1. params and return value: true or false
+        // 2. base case
+        // if (!root) return;
+        if (!root.left && !root.right && curCount === 0) {
+            return true;
+        } else if (!root.left && !root.right && curCount !== 0) {
+            return false;
+        }
+        // 3. logic at each recursion level
         if (root.left) {
-            count -= root.left.val;
-            if (traversal(root.left, count)) return true;
-            count += root.left.val;
+            if (traverse(root.left, curCount - root.left.val)) {
+                return true;
+            }
         }
         if (root.right) {
-            count -= root.right.val;
-            if (traversal(root.right, count)) return true;
-            count += root.right.val;
-        }
+            if (traverse(root.right, curCount - root.right.val)) {
+                return true;
+            }
+        } 
+
         return false;
     };
     if (!root) return false;
-    return traversal(root, targetSum - root.val);
+    return traverse(root, targetSum - root.val);
 };
