@@ -11,29 +11,26 @@
  * @return {number}
  */
 var findBottomLeftValue = function(root) {
-    let result;
-    let maxHeight = - Infinity;
-    // postorder: left -> right -> middle
-    // the deepest(highest) and the leftmost leaf node (doesn't have to be the left leaf)
-    const traverse = (root, height) => {
-        if (!root.left && !root.right) {
-            if (height > maxHeight) {
-                maxHeight = height;
-                result = root.val;
-            }
+    // in the last row: need to keep track of depth
+    // it has to be the deepest level and the first node on that level
+    // traversal order: postorder??
+    let result = null;
+    let maxDepth = -Infinity;
+    // 1. recursion fucntion params and return void
+    const traverse = (root, curDepth) => {
+        // return leftmost value
+        if (!root) return;
+        // 2. base case
+        if (curDepth > maxDepth) {
+            maxDepth = curDepth;
+            result = root.val;
         }
         
-        // left
-        if (root.left) {
-            traverse(root.left, height + 1);
-        }
-        // right
-        if (root.right) {
-            traverse(root.right, height + 1);
-        }
-            
+        traverse(root.left, curDepth + 1);
+        traverse(root.right, curDepth + 1);
     };
-        
+
+    // 3. logic at each recursion level
     traverse(root, 0);
     return result;
 };
