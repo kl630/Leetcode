@@ -11,22 +11,29 @@
  * @return {number}
  */
 var getMinimumDifference = function(root) {
-    let pre = null;
     let minDiff = +Infinity;
-    const traversal = (cur) => {
-        // inorder: left -> middle -> right
+    let pre = null;
+    // Question: Can I define curDiff inside traverse helper function??
+    let curDiff;
+    
+    const traverse = (cur) => {
         if (!cur) return;
+        // left -> middle -> right
+        
         // left:
-        traversal(cur.left);
+        traverse(cur.left);
+        
         // middle:
         if (pre !== null) {
-            let diff = Math.abs(cur.val - pre.val);
-            minDiff = Math.min(minDiff, diff);
+            curDiff = cur.val - pre.val;
+            minDiff = Math.min(minDiff, curDiff);
         }
         pre = cur;
+        
         // right:
-        traversal(cur.right);
+        traverse(cur.right);
     };
-    traversal(root);
+    
+    traverse(root);
     return minDiff;
 };
