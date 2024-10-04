@@ -11,30 +11,26 @@
  * @return {number}
  */
 var getMinimumDifference = function(root) {
+    // TODO: do inorder traversal iteratively
     let minDiff = +Infinity;
+    let stack = [];
+    let cur = root;
     let pre = null;
-    // Question: Can I define curDiff inside traverse helper function??
     
-    const traverse = (cur) => {
-        if (!cur) return;
-        // left -> middle -> right
-        
-        // left:
-        traverse(cur.left);
-        
-        // middle:
-        let curDiff;
-
+    while (stack.length > 0 || cur !== null) {
+        while (cur) {
+            stack.push(cur);
+            cur = cur.left;
+        }
+        cur = stack.pop();
         if (pre !== null) {
-            curDiff = cur.val - pre.val;
+            let curDiff = cur.val - pre.val;
             minDiff = Math.min(minDiff, curDiff);
         }
         pre = cur;
         
-        // right:
-        traverse(cur.right);
-    };
+        cur = cur.right;
+    }
     
-    traverse(root);
     return minDiff;
 };
