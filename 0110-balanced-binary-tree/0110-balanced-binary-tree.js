@@ -11,28 +11,29 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
-    // Question: why do we need getHeight helper function? can't we just use the isBalanced function itself. whenever we found an inbalanced subtree, we can return false.
+    // recursion: traverse the entire tree
+    // left -> right -> middle
     
-    // balanced - height diff between left subtree and right subtree <= 1
-    // post-order traversal: left -> right -> middle
-    // if it's > 1, return -1 to indicate that the tree is already inbalanced
-    const getHeight = (root) => {
-        let result = 0;
-        if (!root) return result;
-        let leftHeight = getHeight(root.left);
-        let rightHeight = getHeight(root.right);
-        if (leftHeight === -1 || rightHeight === -1) {
-            return -1;
-        }
-        
-        if (Math.abs(leftHeight - rightHeight) > 1) {
-            return -1;
-        } else {
-            result = Math.max(leftHeight, rightHeight) + 1;
-        }
-        return result;
+    // TODO: how to get leftHeight and rightHeight?
+    // create a helper function getHeight()
+    const getHeight = (node) => {
+        if (!node) return 0;
+        let left = getHeight(node.left);
+        let right = getHeight(node.right);
+        let res = Math.max(left, right) + 1;
+        return res;
     };
+    // if at any node, if leftSubTree and rightSubtree's height diff > 1
+        // return false
+    if (!root) return true;
+
+    let leftHeight = getHeight(root.left);
+    let rightHeight = getHeight(root.right);
+    if (Math.abs(rightHeight - leftHeight) > 1) {
+        return false;
+    }
     
-    
-    return getHeight(root) !== -1;
+    let leftRes = isBalanced(root.left);
+    let rightRes = isBalanced(root.right);
+    return leftRes && rightRes;
 };
