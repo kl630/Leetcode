@@ -11,29 +11,38 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
-    // recursion: traverse the entire tree
-    // left -> right -> middle
-    
-    // TODO: how to get leftHeight and rightHeight?
-    // create a helper function getHeight()
-    const getHeight = (node) => {
+    // while we are traversing the tree, we are doing 2 things
+    // check if the current subtree is imbalanced already
+    // if it is already imbalanced, no need to calculate its height
+    // *** so we can propagate "-1" up to parent node
+    // if it is balanced, calculate its height
+    // Propagate above 2 info up to the parent node
+    const traverse = (node) => {
+        // 1. params: node. return value: void. it updates result.// NO! it needs a return value!! so that at middle node, we can compare results from left and right subtrees
+        // 2. base case
         if (!node) return 0;
-        let left = getHeight(node.left);
-        let right = getHeight(node.right);
-        let res = Math.max(left, right) + 1;
-        return res;
+        
+        
+        // 3. TODO: recursive logic
+        // Traversal order: postorder
+        // left
+        let left = traverse(node.left);
+        if (left === -1) {
+            return -1;
+        }
+        // right
+        let right = traverse(node.right);
+        if (right === -1) {
+            return -1;
+        }
+        // middle 
+        if (Math.abs(right - left) > 1) {
+            return -1;
+        } else {
+            return Math.max(left, right) + 1;
+        }
     };
-    // if at any node, if leftSubTree and rightSubtree's height diff > 1
-        // return false
-    if (!root) return true;
-
-    let leftHeight = getHeight(root.left);
-    let rightHeight = getHeight(root.right);
-    if (Math.abs(rightHeight - leftHeight) > 1) {
-        return false;
-    }
     
-    let leftRes = isBalanced(root.left);
-    let rightRes = isBalanced(root.right);
-    return leftRes && rightRes;
+   
+    return traverse(root) !== -1;
 };
