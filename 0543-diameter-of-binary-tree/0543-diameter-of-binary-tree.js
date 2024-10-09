@@ -11,23 +11,21 @@
  * @return {number}
  */
 var diameterOfBinaryTree = function(root) {
-    // diameter is NOT the width of a tree
-    // it's the max number of edges
-    // how to get number of edges for a certain node?
-        // leftSubtree's depth + righSubtree's depth
-    // max number of edges: traverse the entire tree and find the max
-    let result = 0;
-    
-    const getDepth = (root) => {
-        if (!root) return 0;
-        // left -> right -> middle
-        let leftDepth = getDepth(root.left);
-        let rightDepth = getDepth(root.right);
-        result = Math.max(result, leftDepth + rightDepth);
-        
-        return Math.max(leftDepth, rightDepth) + 1;
+    let diameter = 0;
+    // create a helper function
+    // param: a node
+    // return: the depth of the node
+    // also, update the diameter global variable, 
+    // which is the max value of left depth + right depth in the entire tree
+    const getDepth = (node) => {
+        if (!node) return 0;
+        let leftDep = getDepth(node.left);
+        let rightDep = getDepth(node.right);
+        let curDiameter = leftDep + rightDep;
+        diameter = Math.max(diameter, curDiameter);
+        return Math.max(leftDep, rightDep) + 1;
     };
     
     getDepth(root);
-    return result;
+    return diameter;
 };
