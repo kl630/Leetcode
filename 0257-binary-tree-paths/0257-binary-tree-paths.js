@@ -11,33 +11,29 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
-    // Keren TODO: 2 ways
-    
     let result = [];
-    let path = [];
+    let path = []; // TODO: convert path [] to a str with ->
     
-    const traverse = (root) => {
-        if (!root) return;
-        
-        if (!root.left && !root.right) {
-            let strPath = path.join('->');
-            result.push(strPath);
+    // Approach 1: traverse the entire tree can solve the problem
+    const traverse = (node) => {
+        if (!node) return;
+        path.push(node.val);
+
+        if (!node.left && !node.right) {
+            result.push(path.join('->'));
             return;
         }
-        
-        if (root.left) {
-            path.push(root.left.val);
-            traverse(root.left);
+        // preorder: do some operation to the cur node
+        if (node.left) {
+            traverse(node.left);
             path.pop();
         }
-        
-        if (root.right) {
-            path.push(root.right.val);
-            traverse(root.right);
+        if (node.right) {
+            traverse(node.right);
             path.pop();
         }
     };
-    path.push(root.val);
+    
     traverse(root);
     return result;
 };
