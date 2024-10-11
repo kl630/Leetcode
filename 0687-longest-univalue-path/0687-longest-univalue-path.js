@@ -11,37 +11,34 @@
  * @return {number}
  */
 var longestUnivaluePath = function(root) {
-    let result = 0;
-
-    // Using a recursive function within longestUnivaluePath itself
-    function longestPath(node) {
+    let maxRes = 0;
+    // edge cases
+    // when the root is null
+    if (!root) return maxRes;
+    
+    const getOneDirectionLongestPath = (node) => {
+        // getOneDirectionLongestPath 
+        // 1. params: node. return: the longest path that ends at the cur node from either left or right subtree
+        // 2. base case
         if (!node) return 0;
-
-        // Calculate the longest path for the left and right children
-        let left = longestPath(node.left);
-        let right = longestPath(node.right);
-
-        let leftPath = 0, rightPath = 0;
-
-        // If the left child has the same value as the current node, extend the path
-        if (node.left && node.left.val === node.val) {
-            leftPath = left + 1;
+        // 3. recursive logic: at each node, return its getOneDirectionLongestPath(node) result to its parent node; at the same same, calculate the longest path that is through the current node, use this value to compare with global variable maxRes and update maxRes
+        let leftLongestPath = getOneDirectionLongestPath(node.left);
+        let rightLongestPath = getOneDirectionLongestPath(node.right);
+        // how to refer to these 2 values?
+        if (node.left && node.val === node.left.val) { // parent node value === left child's value
+            leftLongestPath++;
+        } else {
+            leftLongestPath = 0
         }
-
-        // If the right child has the same value as the current node, extend the path
-        if (node.right && node.right.val === node.val) {
-            rightPath = right + 1;
+        if (node.right && node.val === node.right.val) { // parent node value === right child's value
+            rightLongestPath++;
+        } else {
+            rightLongestPath = 0;
         }
-
-        // Update the global result, considering paths going through the current node
-        result = Math.max(result, leftPath + rightPath);
-
-        // Return the longest path going down from the current node
-        return Math.max(leftPath, rightPath);
-    }
-
-    // Call the recursive function starting at the root
-    longestPath(root);
-
-    return result;
+        maxRes = Math.max(maxRes, leftLongestPath + rightLongestPath);
+        return Math.max(leftLongestPath, rightLongestPath);
+    };
+    
+    getOneDirectionLongestPath(root);
+    return maxRes;
 };
