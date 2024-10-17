@@ -1,39 +1,39 @@
 function findOrder(numCourses: number, prerequisites: number[][]): number[] {
-    let adjList: Map<number, number[]> = new Map()              // adjList: [ 0 => [1] ]  [[1]] array[0] = value
-    let inDegrees: number[] = new Array(numCourses).fill(0);    // [ 0, 1 ]
-    let result: number[] = []
-   
-    for (let [course, prereq] of prerequisites) {
-        if (!adjList.has(prereq)) {
-            adjList.set(prereq, [])
-        }
-        adjList.get(prereq).push(course);
-        inDegrees[course]++
-    }
-   
-    console.log("adj", adjList)
-   
-    let queue: number[] = []        
-   
-    for (let i = 0; i < inDegrees.length; i++) {
-        if (inDegrees[i] === 0) queue.push(i)
-    }
-   
-    while (queue.length > 0) {
-        // process the current node
-        let currentNode = queue.shift()
-        result.push(currentNode)
-       
-        console.log("neoghbor? ",adjList.get(currentNode))
-        if (adjList.get(currentNode)) {
-                for (let neighbor of adjList.get(currentNode)) {
-                    inDegrees[neighbor]--
+  const graph: Map<number, number[]> = new Map(); // Adjacency list
+  const dependencyCount: Map<number, number> = new Map(); // Track unvisited prerequisites
+  const queue: number[] = []; // Store courses ready to process
+  const result: number[] = []; // Topological order
 
-                    if (inDegrees[neighbor] === 0) queue.push(neighbor)
-                }    
-        }
+  // Build the graph and initialize dependency counts
+  for (let i = 0; i < numCourses; i++) {
+    graph.set(i, []); // Ensure all courses exist in the graph
+    dependencyCount.set(i, 0); // Initialize dependency count to 0
+  }
 
+  for (const [course, pre] of prerequisites) {
+    graph.get(pre)!.push(course); // Add course as a neighbor of pre
+    dependencyCount.set(course, dependencyCount.get(course)! + 1); // Increment dependency count for the course
+  }
+
+  // Initialize the queue with courses that have no prerequisites
+  for (let [course, count] of dependencyCount) {
+    if (count === 0) queue.push(course); // No dependencies
+  }
+
+  // Process the courses using BFS
+  while (queue.length > 0) {
+    const current = queue.shift()!; // Dequeue a course
+    result.push(current); // Add to topological order
+
+    // Explore neighbors (dependent courses)
+    for (const neighbor of graph.get(current) || []) {
+      dependencyCount.set(neighbor, dependencyCount.get(neighbor)! - 1); // Decrement dependency count
+      if (dependencyCount.get(neighbor) === 0) {
+        queue.push(neighbor); // If no more prerequisites, add to queue
+      }
     }
-   
-    return result.length === numCourses ? result : [];
-};
+  }
+
+  // If we couldn't process all courses, return an empty array (cycle detected)
+  return result.length === numCourses ? result : [];
+}
